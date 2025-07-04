@@ -15,16 +15,38 @@ def generate_toc(root_dir="."):
 
         indent = "  " * rel_folder.count(os.sep)
         display_name = os.path.basename(foldername) or "."
-        toc.append(f"{indent}- `{rel_folder}/`" if rel_folder != "." else "- `./`")
 
+        # Add clickable folder link
+        if rel_folder == ".":
+            toc.append(f"{indent}- [`./`]({rel_folder}/)")
+        else:
+            toc.append(f"{indent}- [`{rel_folder}/`]({rel_folder}/)")
+
+        # If there's a README.md, include first non-blank line
+        readme_path = os.path.join(foldername, "README.md")
+        if os.path.isfile(readme_path):
+            with open(readme_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    stripped = line.strip()
+                    if stripped:
+                        toc.append(f"{indent}  > {stripped}")
+                        break
+
+        # Add links for other files (but skip readme and script)
         for filename in sorted(filenames):
-            if filename.startswith(".") or filename in skip_files or filename.endswith(".py") or filename.lower() == "readme.md":
+            if (
+                filename.startswith(".") or 
+                filename in skip_files or 
+                filename.endswith(".py") or 
+                filename.lower() == "readme.md"
+            ):
                 continue
-            toc.append(f"{indent}  - `{filename}`")
+            file_path = os.path.join(rel_folder, filename).replace("\\", "/")
+            toc.append(f"{indent}  - [`{filename}`]({file_path})")
 
     with open("TOC.md", "w", encoding="utf-8") as f:
         f.write("\n".join(toc))
 
-    print("✅ TOC.md generated with contents.")
+    print("✅ TOC.md generated with links and README descriptions.")
 
 generate_toc()
