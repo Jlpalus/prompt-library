@@ -1,0 +1,1 @@
+Examples of great (or terrible) outputs with notes on why they worked or failed.

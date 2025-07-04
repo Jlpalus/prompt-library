@@ -1,0 +1,1 @@
+Short prompts or phrases that unlock insight, clarity, or unexpected breakthroughs.

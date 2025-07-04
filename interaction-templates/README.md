@@ -1,0 +1,1 @@
+Structured conversation formats (e.g., interviews, “wait for ✅”, critique loops).

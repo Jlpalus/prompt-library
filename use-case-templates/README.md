@@ -1,0 +1,1 @@
+Reusable prompt scaffolds for specific goals (e.g., blog drafting, idea vetting).
